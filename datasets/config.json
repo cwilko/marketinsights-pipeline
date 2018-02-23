@@ -1,0 +1,49 @@
+{
+	"dataPath": "/home/cwilkin/Development/repos/market data/datasets/",
+	"datasources": [
+		{
+			"name": "tradefair",
+			"date_format": "dd-MM-yy",
+			"time_format": "HH:mm:ss",
+			"index_col": 0,
+			"parse_dates": [[0,1]],
+			"dayfirst": true,
+			"timezone":"Europe/London",
+			"datasets": [
+				{
+					"name":"WallSt-5min",
+					"timezone":"US/Eastern",
+					"sample_unit":"5min",
+					"crop": {
+						"start": "2016-09-09",
+						"end": "2017-09-09"
+					}
+				},
+				{
+					"name":"FTSE-5min",
+					"timezone":"Europe/London",
+					"sample_unit":"5min",
+					"crop": {
+						"start": "2016-09-09",
+						"end": "2017-09-09"
+					}
+				}
+			]
+
+		}
+	],
+	"features": {
+		"start_time": "10:00",
+		"end_time": "11:00",
+		"periods": 12, 
+		"sample_unit": "5min",
+		"type": "candlestick"
+	},
+	"class": {
+		"start_time": "11:00",
+		"end_time": "12:00",
+		"periods": 1, 
+		"sample_unit": "H",
+		"encoding": "binary"
+	}
+}

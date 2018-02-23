@@ -1,0 +1,7 @@
+**/*.ipynb_checkpoints
+ML/data
+datasets/finam
+datasets/tradefair
+datasets/output
+Setup_Credentials.ipynb
+pipelines/cred

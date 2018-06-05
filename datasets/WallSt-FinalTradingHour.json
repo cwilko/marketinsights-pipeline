@@ -1,23 +1,15 @@
 {
-	"dataPath": "/home/cwilkin/Development/repos/Notebooks/datasets/",
 	"name": "WallSt-FinalTradingHour",
-	"outputPath": "/home/cwilkin/Development/repos/Notebooks/datasets/output/",
+	"dataPath": "/home/cwilkin/Development/repos/marketinsights-pipeline/datasets/",
+	"outputPath": "/home/cwilkin/Development/repos/marketinsights-pipeline/datasets/output/",
 	"description": "Label 1 or 0 if the final hour of the trading day was UP or DOWN. Features are the previous n hours data",
 	"datasources": [
 		{
-			"name": "tradefair",
-			"date_format": "dd-MM-yy",
-			"time_format": "HH:mm:ss",
-			"index_col": 0,
-			"parse_dates": [[0,1]],
-			"dayfirst": true,
-			"skiprows": 1,
-			"timezone":"Europe/London",
-			"datasets": [
+			"name": "tradefair",			
+			"timeseries": [
 				{
 					"name":"WallSt-hourly",
 					"market": "DOW",
-					"timezone":"US/Eastern",
 					"sample_unit":"H",
 					"crop": {
 						"start": "2016-04-20",
@@ -28,19 +20,11 @@
 
 		},
 		{
-			"name": "finam",
-			"date_format": "dd-MM-yy",
-			"time_format": "HH:mm:ss",
-			"index_col": 0,
-			"parse_dates": [[0,1]],
-			"dayfirst": true,
-			"skiprows": 0,
-			"timezone":"US/Eastern",
-			"datasets": [
+			"name": "finam",			
+			"timeseries": [
 				{
 					"name":"D&J-IND",
 					"market": "DOW",
-					"timezone":"US/Eastern",
 					"sample_unit":"5min",
 					"crop": {
 						"start": "2013-01-01",
@@ -50,7 +34,6 @@
 				{
 					"name":"SANDP-500",
 					"market": "SPY",
-					"timezone":"US/Eastern",
 					"sample_unit":"5min",
 					"crop": {
 						"start": "2013-01-01",
@@ -61,20 +44,22 @@
 
 		}
 	],
-	"features": {
-		"start_time": "13:00",
-		"end_time": "15:00",
+	"dataset": {
 		"timezone":"US/Eastern",
-		"periods": 2, 
-		"sample_unit": "H",
-		"type": "candlestick"
-	},
-	"class": {
-		"start_time": "15:00",
-		"end_time": "16:00",
-		"timezone":"US/Eastern",
-		"periods": 1, 
-		"sample_unit": "H",
-		"encoding": "one-hot"
+		"features": {
+			"start_time": "13:00",
+			"end_time": "15:00",
+			"periods": 2, 
+			"sample_unit": "H",
+			"type": "candlestick"
+		},
+		"labels": {
+			"start_time": "15:00",
+			"end_time": "16:00",
+			"periods": 1, 
+			"sample_unit": "H",
+			"encoding": "binary"
+		}
 	}
+	
 }

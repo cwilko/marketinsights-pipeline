@@ -1,5 +1,5 @@
 {
-	"dataPath": "/home/cwilkin/Development/repos/market data/datasets/",
+	"dataPath": "/home/cwilkin/Development/repos/marketinsights-pipeline/datasets/",
 	"datasources": [
 		{
 			"name": "tradefair",

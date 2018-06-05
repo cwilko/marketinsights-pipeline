@@ -1,1 +1,1 @@
--e git://github.com/cwilko/quantutils.git#egg=quantutils
+git+git://github.com/cwilko/quantutils.git#egg=quantutils

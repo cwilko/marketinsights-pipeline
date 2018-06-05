@@ -1,7 +1,9 @@
 
+import json
+import pandas
 import quantutils.dataset.pipeline as ppl
 
-def executePipeline(data, FEATURES, CLASS):
+def executePipeline(args):
     
     ### PIPELINE ###################        
     ## Process ready for Machine Learning:
@@ -13,31 +15,36 @@ def executePipeline(data, FEATURES, CLASS):
     ## Convert to Feature Sets
     ## Encode the class
     ## Concat the two
+    
+    data = pandas.read_json(json.dumps(args["data"]), orient='split')
+    dataset = args["dataset"]
+    features = dataset["features"]
+    labels = dataset["labels"]
 
     ## Resample all to dataset sample unit (to introduce nans in all missing periods)
-    featureData = ppl.resample(data, FEATURES["sample_unit"]) 
+    featureData = ppl.resample(data, features["sample_unit"]) 
 
-    featureData = featureData.tz_convert(FEATURES["timezone"])
+    featureData = ppl.localize(featureData, "UTC", dataset["timezone"])
 
     print("Features..")
 
-    featureData = ppl.cropTime(featureData, FEATURES["start_time"], FEATURES["end_time"])
+    featureData = ppl.cropTime(featureData, features["start_time"], features["end_time"])
 
-    featureData = ppl.toFeatureSet(featureData, FEATURES["periods"])
-
+    featureData = ppl.toFeatureSet(featureData, features["periods"])
+    
     featureData = ppl.normaliseCandlesticks(featureData, allowZero=True)
 
-    print("Classes..")
+    print("Labels..")
 
-    classData = ppl.resample(data, CLASS["sample_unit"]) 
+    classData = ppl.resample(data, labels["sample_unit"]) 
 
-    classData = classData.tz_convert(CLASS["timezone"])
+    classData = ppl.localize(classData, "UTC", dataset["timezone"])
 
-    classData = ppl.cropTime(classData, CLASS["start_time"], CLASS["end_time"])
+    classData = ppl.cropTime(classData, labels["start_time"], labels["end_time"])
 
-    classData = ppl.toFeatureSet(classData, CLASS["periods"])
+    classData = ppl.toFeatureSet(classData, labels["periods"])
 
-    classData = ppl.encode(classData, CLASS["encoding"])   
+    classData = ppl.encode(classData, labels["encoding"])   
     
     # 23/01/18 - Set index to reflect the predicted time.
     indexedData = ppl.concat(featureData, classData)
@@ -59,4 +66,4 @@ def executePipeline(data, FEATURES, CLASS):
     # 26/09 - Split data at training time, rather than pipeline. Also save data to Object Store.
     #csvData_train, csvData_val, csvData_test = split(csvData, train=.6, val=.2, test=.2)
 
-    return csvData
+    return json.loads(csvData.to_json(orient='split', date_format="iso"))

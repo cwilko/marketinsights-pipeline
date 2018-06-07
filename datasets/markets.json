@@ -24,7 +24,16 @@
 	},
 	{
 		"name": "SPY",
-		"datasources": [				
+		"datasources": [
+			{
+				"source": "tradefair",
+				"name":"SP500-hourly",
+				"sample_unit":"H",
+				"crop": {
+					"start": "2016-11-01",
+					"end": "2017-05-15"
+				}
+			},				
 			{
 				"source": "finam",			
 				"name":"SANDP-500",

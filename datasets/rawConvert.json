@@ -18,6 +18,11 @@
 					"name":"WallSt-hourly",
 					"market": "DOW",															
 					"timezone":"US/Eastern"
+				},
+				{
+					"name":"SP500-hourly",
+					"market": "SPY",															
+					"timezone":"US/Eastern"
 				}
 			]
 

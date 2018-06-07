@@ -5,3 +5,5 @@ datasets/tradefair
 datasets/output
 Setup_Credentials.ipynb
 pipelines/cred
+cred
+**/cred

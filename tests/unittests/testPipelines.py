@@ -1,11 +1,12 @@
 import unittest
 import pandas
+from quantutils.api.auth import CredentialsFileStore
 from quantutils.api.marketinsights import MarketInsights
 
 class PipelineTest(unittest.TestCase):
 
 	def setUp(self):
-		self.mi = MarketInsights('../../cred/MIOapi_cred.json')
+		self.mi = MarketInsights(CredentialsFileStore('~/.marketinsights'))
 
 	def testDatasetGeneration(self):
 

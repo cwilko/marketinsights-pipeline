@@ -24,6 +24,7 @@ class PipelineTest(unittest.TestCase):
         self.assertEqual(Dataset.generateId(dataset_desc, "DOW"), DATASET_ID)
 
         ds,_ = self.mi.get_dataset_by_id(DATASET_ID)
+        ds = ds["2013-01-01":"2017-05-18"]
 
         expectedDS = pandas.read_csv(root_dir + "testDataset_DOW.csv", index_col=0, parse_dates=True, float_precision='round_trip')
         expectedDS.index = expectedDS.index.tz_localize("UTC").tz_convert("US/Eastern")

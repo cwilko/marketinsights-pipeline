@@ -45,10 +45,7 @@ def executePipeline(args):
     classData = ppl.toFeatureSet(classData, labels["periods"])
 
     classData = ppl.encode(classData, labels["encoding"])   
-    
-    print(classData)
-    print(featureData)
-    
+        
     # 23/01/18 - Set index to reflect the predicted time.
     indexedData = ppl.concat(featureData, classData)
     indexedData.index = classData.index

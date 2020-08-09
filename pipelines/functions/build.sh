@@ -19,7 +19,6 @@ do
 
 	# Web Action (in case needing to expose via APIC)
 	bx wsk action create $NAME --kind python-jessie:3 --web true --main executePipeline $TMP/functions.zip
-	#bx wsk action create $NAME --kind python-jessie:3 --web true -a require-whisk-auth d8926bde-f6e2-4a52-b8ce-7482d97a9075:mvSW5umFWMF40dB0X4sTVDkx0vRtyApBh0NXTPo6hm1QoL4NVN8J9xj1LfkI2g5t --main executePipeline $TMP/functions.zip
 	#bx wsk api create /marketinsights /$NAME get $NAME --response-type json
 
 	sudo rm -fr $TMP

@@ -7,6 +7,7 @@ from quantutils.api.marketinsights import MarketInsights, Dataset
 
 root_dir = os.path.dirname(os.path.abspath(__file__)) + "/"
 
+
 class PipelineTest(unittest.TestCase):
 
     def setUp(self):
@@ -14,16 +15,16 @@ class PipelineTest(unittest.TestCase):
 
     def testDatasetGeneration(self):
 
-        DATASET_ID="4234f0f1b6fcc17f6458696a6cdf5101"
+        DATASET_ID = "4234f0f1b6fcc17f6458696a6cdf5101"
 
         dataset_desc_file = root_dir + "../../../marketinsights-data/datasets/WallSt-FinalTradingHour.json"
-        with open(dataset_desc_file) as data_file:    
+        with open(dataset_desc_file) as data_file:
             dataset_desc = json.load(data_file)["dataset_desc"]
 
-        # Test id generation 
+        # Test id generation
         self.assertEqual(Dataset.generateId(dataset_desc, "DOW"), DATASET_ID)
 
-        ds,_ = self.mi.get_dataset_by_id(DATASET_ID)
+        ds, _ = self.mi.get_dataset_by_id(DATASET_ID)
         ds = ds["2013-01-01":"2017-05-18"]
 
         expectedDS = pandas.read_csv(root_dir + "testDataset_DOW.csv", index_col=0, parse_dates=True, float_precision='round_trip')

@@ -2,8 +2,10 @@ import unittest
 import pandas
 import json
 import os
+import numpy as np
 from quantutils.api.auth import CredentialsStore
 from quantutils.api.marketinsights import MarketInsights, Dataset
+from quantutils.api.functions import Functions
 
 root_dir = os.path.dirname(os.path.abspath(__file__)) + "/"
 
@@ -12,6 +14,8 @@ class PipelineTest(unittest.TestCase):
 
     def setUp(self):
         self.mi = MarketInsights(CredentialsStore())
+        credStore = CredentialsStore()
+        self.fun = Functions(credStore)
 
     def testDatasetGeneration(self):
 
@@ -33,6 +37,27 @@ class PipelineTest(unittest.TestCase):
 
         # Test correct dataset output
         self.assertTrue(expectedDS.equals(ds))
+
+    def testPipelineAPI(self):
+
+        dataset_desc_file = root_dir + "../../../marketinsights-data/datasets/WallSt-FinalTradingHour.json"
+        with open(dataset_desc_file) as data_file:
+            dataset_desc = json.load(data_file)["dataset_desc"]
+
+        ppl_desc = dataset_desc["pipeline"]["pipeline_desc"]
+
+        with open(root_dir + "data/testRawData.json") as data_file:
+            testRawData = json.load(data_file)
+
+        data = Dataset.jsontocsv(testRawData)
+        data.columns = ["Open", "High", "Low", "Close"]
+
+        csvData = {"data": json.loads(data.to_json(orient='split', date_format="iso")), "dataset": ppl_desc}
+        ds = self.fun.call_function("marketdirection", csvData)
+
+        # Test correct pipeline output
+        self.assertTrue(np.allclose(ds[0][0], 0.568182))
+
 
 if __name__ == '__main__':
     unittest.main()

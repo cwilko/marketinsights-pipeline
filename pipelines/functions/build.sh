@@ -13,13 +13,10 @@ do
 	cd $TMP
 	zip -r functions.zip virtualenv/bin/activate_this.py virtualenv/lib/python3.6/site-packages/quantutils __main__.py
 
-	bx wsk action delete $NAME
-
-	#bx wsk action create $NAME --kind python-jessie:3 --main executePipeline $TMP/functions.zip
-
-	# Web Action (in case needing to expose via APIC)
-	bx wsk action create $NAME --kind python-jessie:3 --web true --main executePipeline $TMP/functions.zip
-	#bx wsk api create /marketinsights /$NAME get $NAME --response-type json
+	ibmcloud fn namespace target MIOL_namespace
+	ibmcloud cloud-functions action delete $NAME
+	# Not a web action (unauthenticated)
+	ibmcloud cloud-functions action create $NAME --kind python-jessie:3 --main executePipeline $TMP/functions.zip
 
 	sudo rm -fr $TMP
 

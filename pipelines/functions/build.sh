@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Ensure the user is logged in to the correct IBM Cloud org and space (e.g. eu-gb/MIOL_prod)
 for filename in marketdirection.py
 do
 	NAME=$(echo $filename | cut -f 1 -d '.')
@@ -13,6 +14,7 @@ do
 	cd $TMP
 	zip -r functions.zip virtualenv/bin/activate_this.py virtualenv/lib/python3.6/site-packages/quantutils __main__.py
 
+	# Use the MIOL_namespace which should be an IAM-namespace
 	ibmcloud fn namespace target MIOL_namespace
 	ibmcloud cloud-functions action delete $NAME
 	# Not a web action (unauthenticated)

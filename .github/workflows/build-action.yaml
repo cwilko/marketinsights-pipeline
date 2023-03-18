@@ -1,10 +1,6 @@
 name: Build and Push
 
-on: 
-  workflow_run:
-    workflows: ["Run unittests"]
-    types:
-      - completed
+on: [push]
 
 jobs:
   docker:

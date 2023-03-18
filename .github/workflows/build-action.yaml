@@ -28,4 +28,4 @@ jobs:
           context: docker
           push: true
           platforms: linux/amd64
-          tags: ${{ github.repository }}:0.0.1
+          tags: ${{ github.repository }}:latest

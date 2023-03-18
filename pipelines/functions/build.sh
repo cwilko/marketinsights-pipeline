@@ -15,6 +15,6 @@ do
 
 	echo "Publishing function"
 	# Not a web action (unauthenticated)
-	ibmcloud fn action create $NAME --docker cwilko/marketinsights-function-deps:0.0.1 --main executePipeline $filename
+	ibmcloud fn action create $NAME --docker cwilko/marketinsights-pipeline:latest --main executePipeline $filename
 
 done

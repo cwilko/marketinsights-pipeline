@@ -15,25 +15,26 @@ def executePipeline(args):
     ## Convert to Feature Sets
     ## Encode the class
     ## Concat the two
-    
+        
     data = pandas.read_json(json.dumps(args["data"]), orient='split')
+    data.index.names = ['Date_Time'] # To work around lack of index name propogation by marshalling
     dataset = args["dataset"]
     features = dataset["features"]
     labels = dataset["labels"]
 
     ## Resample all to dataset sample unit (to introduce nans in all missing periods)
     featureData = ppl.resample(data, features["sample_unit"]) 
-
+    
     featureData = ppl.localize(featureData, "UTC", dataset["timezone"])
 
     print("Features..")
 
     featureData = ppl.cropTime(featureData, features["start_time"], features["end_time"])
-
-    featureData = ppl.toFeatureSet(featureData, features["periods"])
     
+    featureData = ppl.toFeatureSet(featureData, features["periods"])
+        
     featureData = ppl.normaliseCandlesticks(featureData, allowZero=True)
-
+    
     print("Labels..")
 
     classData = ppl.resample(data, labels["sample_unit"]) 

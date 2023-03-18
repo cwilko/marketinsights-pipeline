@@ -1,0 +1,3 @@
+quantutils @ git+https://github.com/cwilko/quantutils.git
+pandas==1.5.3
+numpy==1.22 # Needed to place nicely with the base image

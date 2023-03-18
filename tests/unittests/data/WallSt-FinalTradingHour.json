@@ -1,0 +1,35 @@
+{
+	"name": "WallSt-FinalTradingHour",
+	"description": "Label 1 or 0 if the final hour of the trading day was UP or DOWN. Features are the previous n hours data",
+	"assets": {
+		"markets": ["DOW", "SPY"],
+		"start": "2013-01-01",
+		"end": "2017-05-18"
+	},
+	"dataset_desc": {
+		"name": "WallSt-FinalTradingHour",
+		"description": "Label 1 or 0 if the final hour of the trading day was UP or DOWN. Features are the previous n hours data",
+		"features": 9,
+		"labels" : 1,
+		"pipeline": {
+			"id": "marketdirection",
+			"pipeline_desc": {
+				"timezone":"US/Eastern",
+				"features": {
+					"start_time": "13:00",
+					"end_time": "15:00",
+					"periods": 2, 
+					"sample_unit": "H",
+					"type": "candlestick"
+				},
+				"labels": {
+					"start_time": "15:00",
+					"end_time": "16:00",
+					"periods": 1, 
+					"sample_unit": "H",
+					"encoding": "binary"
+				}
+			}
+		}	
+	}	
+}

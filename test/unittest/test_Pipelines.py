@@ -16,7 +16,7 @@ dir = os.path.dirname(os.path.abspath(__file__))
 class PipelineTest(unittest.TestCase):
 
     def setUp(self):
-        self.mi = MIAssembly()
+        self.mi = MIAssembly(secret="marketinsights-k8s-cred")
         self.fun = CloudFunctions()
 
     def testDatasetGeneration(self):

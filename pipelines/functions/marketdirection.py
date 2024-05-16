@@ -34,8 +34,10 @@ def executePipeline(args):
     if len(featureData) % features["periods"]:
         return json.loads(pandas.DataFrame().to_json(orient='split', date_format="iso"))
         
-    featureData = ppl.toFeatureSet(featureData, features["periods"])        
-        
+    featureData = ppl.toFeatureSet(featureData, features["periods"])   
+
+    featureData = numpy.log(featureData)    
+    
     featureData = ppl.normaliseCandlesticks(featureData, allowZero=True)
     
     print("Features: " + str(len(featureData)))

@@ -1,0 +1,1 @@
+../../CONFIG/marketinsights-pipeline/test/curl-example.txt
